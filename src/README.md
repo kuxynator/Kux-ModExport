@@ -1,0 +1,1 @@
+Files exported to: %appdata%\Factorio\script-output

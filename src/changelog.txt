@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2020-11-22
+  Features:
+    - export as markdown
+  Bugfixes:
+    - spaces in links replaced by %20
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2020-11-22
+  Info:
+    - firt public version
+  Locale:
+    - English
+  License:
+    - MIT
