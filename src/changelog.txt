@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.1.0
+Date: 2021-04-20
+  Features:
+    - add export in "mod-list.json" format
+    - add export in "mod-list.json" format with exact version
+	- add export plain text with version
+---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 2020-11-24
   Info:
