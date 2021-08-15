@@ -1,10 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.2.0
+Date: 2021-08-15
+  Features:
+    - disable export if MP is detected
+    - exclude this mod from export
+---------------------------------------------------------------------------------------------------
 Version: 2.1.0
 Date: 2021-04-20
   Features:
     - add export in "mod-list.json" format
     - add export in "mod-list.json" format with exact version
-	- add export plain text with version
+    - add export plain text with version
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 2020-11-24

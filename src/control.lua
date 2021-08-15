@@ -1,32 +1,41 @@
 FileWriter = require("FileWriter")
+local excludeModeExport = true
 
 local exportTxt = function ()
 	local w = FileWriter.create("active_mods.txt", 1)
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		w.writeString(name.."\r\n")
+		::continue::
 	end
 end
 
 local exportTxtVersion = function ()
 	local w = FileWriter.create("active_modsversion.txt", 1)
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		w.writeString(name.." "..version.."\r\n")
+		::continue::
 	end
 end
 
 local exportUrls = function ()
 	local w = FileWriter.create("active_mods_urls.txt", 1)
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		local n = string.gsub(name, "%s", "%%20")
 		w.writeString("https://mods.factorio.com/mod/"..n.."\r\n")
+		::continue::
 	end
 end
 
 local exportMd = function ()
 	local w = FileWriter.create("active_mods.md", 1)
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		local n = string.gsub(name, "%s", "%%20")
 		w.writeString("1. ["..name.."](https://mods.factorio.com/mod/"..n..")\r\n")
+		::continue::
 	end
 end
 
@@ -35,11 +44,13 @@ local exportModListJson = function (fileName)
 	w.writeString("{\r\n  \"mods\":[\r\n")
 	local first = true
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		if first then first = false else w.writeString(",\r\n\r\n") end
 		w.writeString("    {\r\n")
 		w.writeString("      \"name\": \""..name.."\",\r\n")
 		w.writeString("      \"enabled\": \"true\"\r\n")
 		w.writeString("    }")
+		::continue::
 	end
 	w.writeString("\r\n\t]\r\n}")
 end
@@ -49,12 +60,14 @@ local exportModListJsonVersion = function (fileName)
 	w.writeString("{\r\n  \"mods\":[\r\n")
 	local first = true
 	for name, version in pairs(game.active_mods) do
+		if excludeModeExport and name == script.mod_name then goto continue end
 		if first then first = false else w.writeString(",\r\n\r\n") end
 		w.writeString("    {\r\n")
 		w.writeString("      \"name\": \""..name.."\",\r\n")
 		w.writeString("      \"enabled\": \"true\",\r\n")
 		w.writeString("      \"version\": \""..version.."\"\r\n")
 		w.writeString("    }")
+		::continue::
 	end
 	w.writeString("\r\n  ]\r\n}")
 end
@@ -69,6 +82,12 @@ end
 
 script.on_nth_tick(60,function ()
 	script.on_nth_tick(nil)
+	print(script.mod_name .. " starting...")
+	if game.is_multiplayer() then
+		print "Canceled. Multiplayer detected,"
+		return
+	end
+
 	--print(os.date("%Y-%m-%d %H%M%S"))
 	exportModListJson("active_mods.json")
 	exportModListJsonVersion("active_mods_exact.json") -- mod-list.json format with version
@@ -76,6 +95,8 @@ script.on_nth_tick(60,function ()
 	exportTxtVersion() -- plain text with version
 	exportUrls()
 	exportMd()
+
+	print("...done.")
 	--[[
 	local txtList=createTextListOfMods()
 	-- Note: Can only be used when the map contains exactly one player.
